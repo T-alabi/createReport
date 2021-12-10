@@ -190,13 +190,12 @@ class EdibleFreshItem extends EdibleItem {
  * Hint: it might be helpful to format a String of toString() method using String.format() method (works like System.out.printf.)
  * Hint2: You might have to close and delete existing output .doc or .txt file from its folder */
 
-/*NOT FORMATTED YET USE PRINTF TO FORMAT*/
-
 public class Oalabi_hw7 {
 	static Item [] items = new Item [200];//an array of all Items 
 	static EdibleItem [] edibleItems;//an array of Edible Items 
 	static int countEdibleitems = 0;//count edible items 
 	static String pageHeader; //save the header
+	static String header2;
 	
 	//main() method runs the program
 	public static void main(String[] args) throws FileNotFoundException {
@@ -238,11 +237,15 @@ public class Oalabi_hw7 {
 		
 
 		//Print the header row of the data
-		output.print(pageHeader + "\n");
+		output.print(pageHeader + "\n\n");
+		output.print(header2 + "\n\n");
+
 		
 		//Print all items into the file (.txt or .doc)
 		for (int i = 0; i < items.length -1; i++) {
-			output.print(items[i].getItemName( ) + "\t " + items[i].getCost() + "\n");
+			//output.print(items[i].getItemName( ) + "\t " + items[i].getType()+ "\t" + items[i].getCost() + "\t" + items[i].getSpecialFeature() + "\n");
+			//output.print(items[i].getTransactionTime());
+			output.printf("%-20s %-10s %-15s %1.2f %-10s \n",items[i].getTransactionTime(),  items[i].getItemName(), items[i].getType(), items[i].getCost(), items[i].getSpecialFeature());
 		}
 
 			
@@ -264,6 +267,7 @@ public class Oalabi_hw7 {
 		output.printf((char)12 +pageHeader.trim() + " sorted by price\n\n");
 		
 		//Print the header row of the page and the data
+		
 
 		//Print all items sorted by price into the same file
 
@@ -292,7 +296,6 @@ public class Oalabi_hw7 {
 		
 		// Declare file and Create a File instance
 	    java.io.File file = new java.io.File("/Users/tmala/eclipse-workspace/oalabi_HW7/src/finalproject/input.txt");
-	    //To find path to file on Mac use https://macpaw.com/how-to/get-file-path-mac
 	    
 	    // Declare a Scanner variable 
 	    Scanner input = null;
@@ -306,7 +309,7 @@ public class Oalabi_hw7 {
 	    // Read data from a file
 		pageHeader = input.nextLine() + "\n";//title
 		
-		String header2 = input.nextLine() + input.nextLine() + input.nextLine();//table header
+		 header2 = input.nextLine() + input.nextLine() + input.nextLine();//table header
 	
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss.Z", Locale.US);
 		LocalDateTime localDateTime = null;
@@ -347,6 +350,9 @@ public class Oalabi_hw7 {
 	public static void sortByPrice(Item[] list ) { 
 	
 		//provide your own algorithm using any sorting algorithm of your choice
+		for (int i  = 0; i< items.length -1; i++) {
+			
+		}
 		
 	}
 
