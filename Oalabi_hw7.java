@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 class Item {
+	//implements Comparable<Item>; 
+	
 			//add data fields
 		private LocalDateTime transactionTime;
 		private String itemName;
@@ -76,6 +78,7 @@ class Item {
 			return "Item transactionTime:" + transactionTime + ", itemName:" + itemName + ", type:" + type
 					+ ", specialFeature:" + specialFeature + " ";
 		}
+
 }//end item
 
 
@@ -184,6 +187,8 @@ class EdibleFreshItem extends EdibleItem {
 } //end edible fresh
 
 
+
+
 /*	TASK 5. Implement part 1 of the report.  
  * You need to read data from input.txt file, store it into an array of items (called items) 
  * and write it in a formatted form into the output file. Code, Debug and Present in the best format possible. 
@@ -251,8 +256,11 @@ public class Oalabi_hw7 {
 			
 		//Display money total and the average price at the end of Part 1
 
-				output.print("The averge price is: " + average);
-				output.print("The money total is: " + sum);
+				output.print("The average price is: $");
+				output.printf("%-1.2f", average);
+				
+				output.print("\nThe total money is: $");
+				output.printf("%1.2f\n " , sum);
 				
 				
 /*TASK 6. Implement part 2 of the report.  
@@ -267,9 +275,15 @@ public class Oalabi_hw7 {
 		output.printf((char)12 +pageHeader.trim() + " sorted by price\n\n");
 		
 		//Print the header row of the page and the data
+		output.print(header2);
 		
 
 		//Print all items sorted by price into the same file
+		for (int i = 0; i < items.length -1; i++) {
+			//output.print(items[i].getItemName( ) + "\t " + items[i].getType()+ "\t" + items[i].getCost() + "\t" + items[i].getSpecialFeature() + "\n");
+			//output.print(items[i].getTransactionTime());
+			output.printf("%-20s %-10s %-15s %1.2f %-10s \n",items[i].getTransactionTime(),  items[i].getItemName(), items[i].getType(), items[i].getCost(), items[i].getSpecialFeature());
+		}
 
 		
 /*TASK 7. Implement part 3 of the report.  
@@ -348,13 +362,42 @@ public class Oalabi_hw7 {
 	
 	//sortByPrice() method sorts the items by their price. You can use any Sorting algorithm you want; some useful links are there in Appendix.
 	public static void sortByPrice(Item[] list ) { 
+		
 	
-		//provide your own algorithm using any sorting algorithm of your choice
-		for (int i  = 0; i< items.length -1; i++) {
-			
+		/* 
+		 * for (int i = 1; i < list.length; i++) {
+      /* insert list[i] into a sorted sublist list[0..i-1] so that
+          list[0..i] is sorted. *
+          
+      int currentElement = list[i];
+      int k;
+      for (k = i - 1; k >= 0 && list[k] > currentElement; k--) {
+        list[k + 1] = list[k];
+      }
+
+      // Insert the current element into list[k+1]
+      list[k + 1] = currentElement;
+    }
+		 * */
+		
+		for (int i = 1; i < list.length -1; i++) {
+		      // insert list[i] into a sorted sublist list[0..i-1] so that
+			//          list[0..i] is sorted. *
+
+			Item currentElement = list[i];
+			int k;
+			for (k = i-1; k>=0 && list[k].getCost() > currentElement.getCost(); k--) {
+				list[k +1] = list[k];
+			}
+		      // Insert the current element into list[k+1]
+
+			list[k+1] = currentElement;
 		}
+			
 		
 	}
+
+
 
 	//sortByDate() method sorts the edible items by their expiration date. You can use any Sorting algorithm you want; some useful links are there in Appendix.
 	public static void sortByDate(EdibleItem[] list ) {//selection sort
