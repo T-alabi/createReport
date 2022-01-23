@@ -291,15 +291,42 @@ public class Oalabi_hw7 {
  * Sort this data by expiration data and write it in a formatted form into the same output file. 
  * Code, Debug and Present in a best format possible. */
 
+		
+		//populates edibleItems array
+		edibleItems = new EdibleItem[countEdibleitems];
+		
+		int countEdibleIndex = 0;
+				for(int i = 0; i < items.length-1; i++) {
+					if ((items[i].getType()).equals("edible") || items[i].getType().equals("edibleFresh") ){
+						edibleItems[countEdibleIndex] = (EdibleItem) items[i];
+						countEdibleIndex++;
+					}
+				}
 		//create an array of EdibleItems
 
+		EdibleItem[] EdibleItems = sortByDate(edibleItems);
+		
+		
+		// from list of items, if items[i].gettype=edibleitem
+		//ass to edible items array
+		
+		
 		//sort Edible Items by Expiration Date
 	
 		//next page starts
+		output.printf((char)12 +pageHeader.trim() + " sorted by expiration Date\n\n");
+
 		
 		//Print the header row of the page and the data
+		output.print(header2);
+
 		
 		//Print all Edible Items sorted by their expiration date into the file
+		for (int i = 0; i < EdibleItems.length -1; i++) {
+			//output.print(items[i].getItemName( ) + "\t " + items[i].getType()+ "\t" + items[i].getCost() + "\t" + items[i].getSpecialFeature() + "\n");
+			//output.print(items[i].getTransactionTime());
+			output.printf("%-20s %-10s %-15s %1.2f %-10s \n",EdibleItems[i].getTransactionTime(),  EdibleItems[i].getItemName(), EdibleItems[i].getType(), EdibleItems[i].getCost(), EdibleItems[i].getSpecialFeature());
+		}
 		
 		// Close the file
 	    output.close();
@@ -351,6 +378,7 @@ public class Oalabi_hw7 {
     			}
    				else {
     				items[i] = new EdibleFreshItem(localDateTime, item, type, cost, localDate, Boolean.parseBoolean(input.next())); 
+
         		}
     		}
 	    	i++;
@@ -363,22 +391,6 @@ public class Oalabi_hw7 {
 	//sortByPrice() method sorts the items by their price. You can use any Sorting algorithm you want; some useful links are there in Appendix.
 	public static void sortByPrice(Item[] list ) { 
 		
-	
-		/* 
-		 * for (int i = 1; i < list.length; i++) {
-      /* insert list[i] into a sorted sublist list[0..i-1] so that
-          list[0..i] is sorted. *
-          
-      int currentElement = list[i];
-      int k;
-      for (k = i - 1; k >= 0 && list[k] > currentElement; k--) {
-        list[k + 1] = list[k];
-      }
-
-      // Insert the current element into list[k+1]
-      list[k + 1] = currentElement;
-    }
-		 * */
 		
 		for (int i = 1; i < list.length -1; i++) {
 		      // insert list[i] into a sorted sublist list[0..i-1] so that
@@ -400,8 +412,21 @@ public class Oalabi_hw7 {
 
 
 	//sortByDate() method sorts the edible items by their expiration date. You can use any Sorting algorithm you want; some useful links are there in Appendix.
-	public static void sortByDate(EdibleItem[] list ) {//selection sort
+	public static EdibleItem[] sortByDate(EdibleItem[] list ) {//selection sort
 		//provide your own algorithm using any sorting algorithm of your choice
+		
+		for (int i=0; i<countEdibleitems; i++) {
+			
+			for(int j=0; j<(countEdibleitems -i-1); j++) {
+				if (list[j].getBestBeforeDate().isAfter(list[j+1].getBestBeforeDate())) {
+					EdibleItem temp = list[j];
+					list[j] = list[j+1];
+					list[j+1] = temp;
+				}
+			}
+		}
+		
+		return list;
 	}
 }
 
